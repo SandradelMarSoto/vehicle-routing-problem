@@ -2,10 +2,6 @@
 package mx.unam.ciencias.heuristicas
 
 import mx.unam.ciencias.heuristicas.vrp.Grafica
-import mx.unam.ciencias.heuristicas.vrp.Solucion
-import mx.unam.ciencias.heuristicas.ant.Heuristica
-import java.io.File
-import kotlin.random.Random
 
 
 /**
@@ -14,4 +10,7 @@ import kotlin.random.Random
  */
 fun main(args: Array<String>) {
         println("Iniciamos")
+        val graf = Grafica()
+        val solInicial = graf.obtieneSolucionInicial()
+        println(graf.toString(solInicial))
 }

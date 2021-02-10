@@ -1,9 +1,11 @@
 package mx.unam.ciencias.heuristicas.vrp
+
 import mx.unam.ciencias.heuristicas.DAO
-import mx.unam.ciencias.heuristicas.modelo.Trabajador
-import mx.unam.ciencias.heuristicas.modelo.Tarea
-import java.util.*
-import kotlin.collections.ArrayList
+import mx.unam.ciencias.heuristicas.modelo.Vehiculo
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Declaramos nuestra clase Grafica que representará los distintos métodos de nuestra grafica del problema
@@ -11,4 +13,144 @@ import kotlin.collections.ArrayList
  */
 class Grafica(){
 
+    val dao = DAO().obtieneValores()
+    val dimension = DAO().dimension
+    val cords = DAO().cords
+    val demanda = DAO().pedidos
+    /** Matriz que tendrá el valor de las distancias entre los clientes*/
+    val matrizDistancia = obtieneDistancias()
+    val vehiculos = DAO().vehiculos
+    val capacidad = DAO().capacidad
+
+    /**
+     * Función que obtiene la distancia entre dos puntos
+     * @param x1 El id de la primera ciudad
+     * @param y1 El id de la segunda ciudad
+     * @param x2 El id de la primera ciudad
+     * @param y2 El id de la segunda ciudad
+     * @return La distancia entre esas dos coordenadas
+     */
+    private fun euclideana(x1: Int, y1: Int, x2: Int, y2: Int): Double {
+        val distanciaX = abs(x2 - x1)
+        val distanciaY = abs(y2 - y1)
+        return sqrt((distanciaX.toDouble().pow(2)) +(distanciaY.toDouble().pow(2)))
+    }
+
+    fun obtieneDistancias(): Array<DoubleArray>{
+        val matrizDistancia = Array(dimension) { DoubleArray(dimension) }
+        //Llenamos la matriz de distancias obteniendo la distancia euclidena
+        for (i in 0 until dimension) {
+            for (j in 0 until dimension) {
+                if (i == j) {
+                    matrizDistancia[i][j] = 0.0
+                } else {
+                    matrizDistancia[i][j] = euclideana(
+                        cords[i][0],
+                        cords[i][1],
+                        cords[j][0],
+                        cords[j][1]
+                    )
+                }
+            }
+        }
+        return matrizDistancia
+    }
+
+    fun getDemanda(id: Int): Int{
+        return demanda[id]
+    }
+
+    fun getCostoVehiculo(vehiculo: Vehiculo): Double{
+        val rutas = vehiculo.rutas
+        val primero = rutas[0]
+        var costo = matrizDistancia[0][primero]
+        for (i in 1 until rutas.size){
+            costo += matrizDistancia[i-1][i]
+        }
+        costo+= matrizDistancia[rutas.size-1][0]
+        return costo
+    }
+
+    fun getCosto(vehiculos: ArrayList<Vehiculo>):Double{
+        var costo = 0.0
+        for(vehiculo in vehiculos){
+            costo += getCostoVehiculo(vehiculo)
+        }
+        return costo
+    }
+
+    fun getCapacidadUsada(vehiculo: Vehiculo): Int{
+        val rutas = vehiculo.rutas
+        var capacidad = 0
+        for (i in rutas){
+            capacidad += getDemanda(i)
+        }
+        return capacidad
+    }
+
+    fun esFactible(vehiculos: ArrayList<Vehiculo>): Boolean{
+        for (vehiculo in vehiculos) {
+            if  (vehiculo.capacidad < getCapacidadUsada(vehiculo)){
+                return false
+            }
+        }
+        return true
+    }
+
+    fun obtieneAnguloPolar(id: Int): Double {
+        val x1 = cords[id][0]
+        val y1 = cords[id][1]
+        val xDeposito = cords[0][0]
+        val yDeposito = cords[0][0]
+        val angle = (atan2((y1 - yDeposito).toDouble(), (x1 - xDeposito).toDouble()))
+        angle * 180 / Math.PI
+        return (90 - angle) % 360
+    }
+
+    fun obtieneSolucionInicial():ArrayList<Vehiculo>{
+        var contaId = 1
+        var capacidadUsada = 0
+        val vehiculos = ArrayList<Vehiculo>()
+        val angulos = ArrayList<Pair<Int,Double>>()
+        var ruta = ArrayList<Int>()
+        for (i in 0 until dimension){
+            var ang = Pair(i, obtieneAnguloPolar(i))
+            angulos.add(ang)
+        }
+        angulos.sortBy { it.second }
+        for(a in angulos){
+            capacidadUsada+= getDemanda(a.first)
+            if(capacidadUsada > capacidad){
+                vehiculos.add(Vehiculo(contaId, capacidad, ruta))
+                contaId++
+                capacidadUsada = 0
+                ruta.clear()
+                ruta.add(a.first)
+            }
+            else{
+                ruta.add(a.first)
+            }
+        }
+        return vehiculos
+    }
+
+    fun toString(vehiculos: ArrayList<Vehiculo>): String{
+        var s = "Resultado:"
+        for (vehiculo in vehiculos) {
+            s += "Vehiculo $vehiculo.id\n"
+            s += "["
+            val rutas = vehiculo.rutas
+            for (ruta in rutas){
+                s += (ruta+1).toString()
+                s += ", "
+            }
+            s+= "]"
+            s += "\n"
+        }
+        s+= "Es Factible: "
+        s+= esFactible(vehiculos).toString()
+        s+= "Costo: "
+        s+= getCosto(vehiculos).toString()
+        return s
+    }
 }
