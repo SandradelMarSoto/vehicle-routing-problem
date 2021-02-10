@@ -6,6 +6,8 @@ import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.random.Random
+
 
 /**
  * Declaramos nuestra clase Grafica que representará los distintos métodos de nuestra grafica del problema
@@ -62,12 +64,15 @@ class Grafica(val url: String, val clientes:Int){
 
     fun getCostoVehiculo(vehiculo: Vehiculo): Double{
         val rutas = vehiculo.rutas
-        val primero = rutas[0]
-        var costo = matrizDistancia[0][primero]
-        for (i in 1 until rutas.size){
-            costo += matrizDistancia[i-1][i]
+        var costo = 0.0
+        if(rutas.size > 0) {
+            val primero = rutas[0]
+            var costo = matrizDistancia[0][primero]
+            for (i in 1 until rutas.size) {
+                costo += matrizDistancia[rutas[i-1]][rutas[i]]
+            }
+            costo += matrizDistancia[rutas[rutas.size-1]][0]
         }
-        costo+= matrizDistancia[rutas.size-1][0]
         return costo
     }
 
@@ -76,7 +81,10 @@ class Grafica(val url: String, val clientes:Int){
         for(vehiculo in vehiculos){
             costo += getCostoVehiculo(vehiculo)
         }
-        return costo
+        if(esFactible(vehiculos)){
+            return costo
+        }
+        return costo * 1000
     }
 
     fun getCapacidadUsada(vehiculo: Vehiculo): Int{
@@ -122,7 +130,6 @@ class Grafica(val url: String, val clientes:Int){
 
         for(i in 0 until angulos.size){
             var propuesta = angulos[i].first
-            println(i)
             if((capacidadUsada + getDemanda(propuesta) <= capacidad)){
                 ruta.add(propuesta)
                 capacidadUsada += getDemanda(propuesta)
@@ -148,7 +155,7 @@ class Grafica(val url: String, val clientes:Int){
         var s = "Resultado:\n"
         for (vehiculo in vehiculos) {
             s += "Vehiculo "+ vehiculo.id +"\n"
-            s += "["
+            s += "Ruta: ["
             var rutas = vehiculo.rutas
             for (ruta in rutas){
                 s += (ruta+1).toString()
