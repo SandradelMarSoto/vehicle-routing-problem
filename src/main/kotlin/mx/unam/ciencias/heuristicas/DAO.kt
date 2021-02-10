@@ -21,7 +21,7 @@ class DAO(val url: String, val clientes:Int) {
     /**Coordenadas de los clientes*/
     val cords = Array(clientes) { IntArray(2) }
     /** Demandas de los clientes*/
-    val pedidos = IntArray(clientes){0}
+    val pedidos = IntArray(clientes)
     /** El archivo donde se encuentra el problema*/
     private val file = File(url)
 
@@ -60,6 +60,7 @@ class DAO(val url: String, val clientes:Int) {
                     counter++
                     nextLine = scanner.nextLine()
                 }
+                counter = 0
                 nextLine = scanner.nextLine()
                 //Obtenemos los valores de los pedidos o demandas de los clientes
                 while ((nextLine != "DEPOT_SECTION") and (counter != dimension)) {

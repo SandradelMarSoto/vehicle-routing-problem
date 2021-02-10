@@ -101,7 +101,7 @@ class Grafica(val url: String, val clientes:Int){
         val x1 = cords[id][0]
         val y1 = cords[id][1]
         val xDeposito = cords[0][0]
-        val yDeposito = cords[0][0]
+        val yDeposito = cords[0][1]
         val angle = (atan2((y1 - yDeposito).toDouble(), (x1 - xDeposito).toDouble()))
         angle * 180 / Math.PI
         return (90 - angle) % 360
@@ -113,15 +113,20 @@ class Grafica(val url: String, val clientes:Int){
         val vehiculos = ArrayList<Vehiculo>()
         val angulos = ArrayList<Pair<Int,Double>>()
         var ruta = ArrayList<Int>()
-        for (i in 0 until dimension){
+        //Iniciamos en 1 porque ignoramos al deposito
+        for (i in 1 until dimension){
             var ang = Pair(i, obtieneAnguloPolar(i))
             angulos.add(ang)
         }
         angulos.sortBy { it.second }
+
         for(a in angulos){
-            capacidadUsada+= getDemanda(a.first)
+            capacidadUsada += getDemanda(a.first)
             if(capacidadUsada > capacidad){
-                vehiculos.add(Vehiculo(contaId, capacidad, ruta))
+                println(a)
+                println(ruta)
+                var veh = Vehiculo(contaId, capacidad, ruta)
+                vehiculos.add(veh)
                 contaId++
                 capacidadUsada = 0
                 ruta.clear()
@@ -135,21 +140,23 @@ class Grafica(val url: String, val clientes:Int){
     }
 
     fun toString(vehiculos: ArrayList<Vehiculo>): String{
-        var s = "Resultado:"
+        var s = "Resultado:\n"
         for (vehiculo in vehiculos) {
-            s += "Vehiculo $vehiculo.id\n"
+            s += "Vehiculo "+ vehiculo.id +"\n"
             s += "["
-            val rutas = vehiculo.rutas
+            var rutas = vehiculo.rutas
             for (ruta in rutas){
                 s += (ruta+1).toString()
                 s += ", "
             }
             s+= "]"
             s += "\n"
+            s += "Costo "+ getCostoVehiculo(vehiculo).toString()
+            s += "\n"
         }
         s+= "Es Factible: "
         s+= esFactible(vehiculos).toString()
-        s+= "Costo: "
+        s+= "\nCosto Total: "
         s+= getCosto(vehiculos).toString()
         return s
     }
