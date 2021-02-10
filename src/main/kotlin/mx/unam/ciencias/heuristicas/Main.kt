@@ -10,7 +10,9 @@ import mx.unam.ciencias.heuristicas.vrp.Grafica
  */
 fun main(args: Array<String>) {
         println("Iniciamos")
-        val graf = Grafica()
+        val dao = DAO("resources/A/A-n32-k5.vrp", 32)
+        dao.obtieneValores()
+        val graf = Grafica("resources/A/A-n32-k5.vrp", 32)
         val solInicial = graf.obtieneSolucionInicial()
         println(graf.toString(solInicial))
 }

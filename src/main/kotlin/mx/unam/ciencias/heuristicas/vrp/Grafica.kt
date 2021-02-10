@@ -11,16 +11,16 @@ import kotlin.math.sqrt
  * Declaramos nuestra clase Grafica que representará los distintos métodos de nuestra grafica del problema
  * * @constructor Devuelve una gráfica
  */
-class Grafica(){
+class Grafica(val url: String, val clientes:Int){
 
-    val dao = DAO().obtieneValores()
-    val dimension = DAO().dimension
-    val cords = DAO().cords
-    val demanda = DAO().pedidos
+    val dao = DAO(url, clientes).getValores()
+    val dimension = dao.first[0]
+    val cords = dao.second
+    val demanda = dao.third
     /** Matriz que tendrá el valor de las distancias entre los clientes*/
     val matrizDistancia = obtieneDistancias()
-    val vehiculos = DAO().vehiculos
-    val capacidad = DAO().capacidad
+    val vehiculos = dao.first[2]
+    val capacidad = dao.first[1]
 
     /**
      * Función que obtiene la distancia entre dos puntos

@@ -1,8 +1,9 @@
 package mx.unam.ciencias.heuristicas
 
 import java.io.File
-import kotlin.math.*
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 /**
  * Declaramos nuestra clase DAO que obtiene la información de la base de datos
@@ -10,28 +11,27 @@ import java.util.*
  * @constructor Crea un DAO
  * @property url Es la ubicación del archivo vrp
  */
-class DAO(val url: String = "resources/A/A-n32-k5.vrp") {
+class DAO(val url: String, val clientes:Int) {
     /** Número de clientes*/
-    var dimension = valores
+    var dimension = 0
     /** Capacidad de los camiones*/
-    var capacidad =
+    var capacidad = 0
     /** Óptimo de vehículos */
-    var vehiculos =
+    var vehiculos = 0
     /**Coordenadas de los clientes*/
-    var cords: Array<IntArray> =
+    val cords = Array(clientes) { IntArray(2) }
     /** Demandas de los clientes*/
-    var pedidos: IntArray
+    val pedidos = IntArray(clientes){0}
     /** El archivo donde se encuentra el problema*/
     private val file = File(url)
-    /** Scanner a usar*/
-    private val scanner = Scanner(file)
 
     /**
      * Función que obtiene la información a partir de los archivos de tipo VRP
      * Archivos obtenidos de: http://vrp.atd-lab.inf.puc-rio.br/index.php/en/
      */
-    fun obtieneValores() {
+    fun obtieneValores(){
         //Se va a recorrer línea por línea del documento
+        val scanner = Scanner(file)
         while (scanner.hasNextLine()) {
             var nextLine: String = scanner.nextLine()
             if (nextLine.split(" ".toRegex()).toTypedArray()[0] == "COMMENT") {
@@ -44,13 +44,11 @@ class DAO(val url: String = "resources/A/A-n32-k5.vrp") {
             }
             //Obtenemos el valor de la dimension e inicializamos las matrices
             if (nextLine.split(" ".toRegex()).toTypedArray()[0] == "DIMENSION") {
-                 dimension = nextLine.split(" ".toRegex()).toTypedArray()[2].toInt()
-                 val cords = Array(dimension) { IntArray(2) }
-                 pedidos = IntArray(dimension)
+                dimension = nextLine.split(" ".toRegex()).toTypedArray()[2].toInt()
             }
             //Obtenemos el valor de la capacidad
             if (nextLine.split(" ".toRegex()).toTypedArray()[0] == "CAPACITY") {
-                 capacidad = nextLine.split(" ".toRegex()).toTypedArray()[2].toInt()
+                capacidad = nextLine.split(" ".toRegex()).toTypedArray()[2].toInt()
             }
             //Obtenemos el valor de las coordenadas de los nodos de los clientes
             if (nextLine.split(" ".toRegex()).toTypedArray()[0] == "NODE_COORD_SECTION") {
@@ -62,7 +60,6 @@ class DAO(val url: String = "resources/A/A-n32-k5.vrp") {
                     counter++
                     nextLine = scanner.nextLine()
                 }
-                counter = 0
                 nextLine = scanner.nextLine()
                 //Obtenemos los valores de los pedidos o demandas de los clientes
                 while ((nextLine != "DEPOT_SECTION") and (counter != dimension)) {
@@ -74,5 +71,12 @@ class DAO(val url: String = "resources/A/A-n32-k5.vrp") {
         }
     }
 
+    fun getValores(): Triple<ArrayList<Int>, Array<IntArray>, IntArray>{
+        obtieneValores()
+        val valores = ArrayList<Int>()
+        valores.add(dimension)
+        valores.add(capacidad)
+        valores.add(vehiculos)
+        return Triple(valores, cords, pedidos)
+    }
 }
-
