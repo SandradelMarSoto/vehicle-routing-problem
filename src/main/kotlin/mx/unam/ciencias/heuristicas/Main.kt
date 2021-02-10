@@ -14,5 +14,6 @@ fun main(args: Array<String>) {
         dao.obtieneValores()
         val graf = Grafica("resources/A/A-n32-k5.vrp", 32)
         val solInicial = graf.obtieneSolucionInicial()
+        //val mejorSolucion =
         println(graf.toString(solInicial))
 }

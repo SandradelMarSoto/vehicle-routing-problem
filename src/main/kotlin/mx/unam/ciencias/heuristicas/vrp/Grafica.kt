@@ -120,20 +120,25 @@ class Grafica(val url: String, val clientes:Int){
         }
         angulos.sortBy { it.second }
 
-        for(a in angulos){
-            capacidadUsada += getDemanda(a.first)
-            if(capacidadUsada > capacidad){
-                println(a)
-                println(ruta)
+        for(i in 0 until angulos.size){
+            var propuesta = angulos[i].first
+            println(i)
+            if((capacidadUsada + getDemanda(propuesta) <= capacidad)){
+                ruta.add(propuesta)
+                capacidadUsada += getDemanda(propuesta)
+                if(i >= angulos.size-1){
+                    var veh = Vehiculo(contaId, capacidad, ruta)
+                    vehiculos.add(veh)
+                }
+            }
+            else{
                 var veh = Vehiculo(contaId, capacidad, ruta)
                 vehiculos.add(veh)
                 contaId++
+                ruta = ArrayList<Int>()
                 capacidadUsada = 0
-                ruta.clear()
-                ruta.add(a.first)
-            }
-            else{
-                ruta.add(a.first)
+                ruta.add(propuesta)
+                capacidadUsada += getDemanda(propuesta)
             }
         }
         return vehiculos
