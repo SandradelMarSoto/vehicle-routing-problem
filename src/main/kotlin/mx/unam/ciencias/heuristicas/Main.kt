@@ -15,9 +15,9 @@ import kotlin.random.Random
 fun main(args: Array<String>) {
         val seedS = (args[0]).toInt()
         val seedF = (args[1]).toInt()
-        val dao = DAO("resources/A/A-n32-k5.vrp", 32)
+        val dao = DAO("resources/A/A-n63-k9.vrp", 63)
         dao.obtieneValores()
-        val graf = Grafica("resources/A/A-n32-k5.vrp", 32)
+        val graf = Grafica("resources/A/A-n63-k9.vrp", 63)
         var string = "Soluciones de las distintas semillas en el rango\n"
         var mejorCosto = Double.MAX_VALUE
         var mejorSemilla = 0

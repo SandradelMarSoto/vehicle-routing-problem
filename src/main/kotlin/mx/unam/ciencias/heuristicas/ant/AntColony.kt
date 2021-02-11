@@ -64,20 +64,28 @@ class AntColony (private val matrizDistancias:  Array<DoubleArray>, private val 
     fun aco(){
         for(i in 0 until maxIt){
             for(i in 0 until nAnt){
-                //antColony[i].asignaciones = asignaAleatorio(antColony[i].asignaciones)
+                antColony[i].asignaciones = asignaAleatorio(antColony[i].asignaciones)
+                for(j in 2 until n){
+                    var a = antColony[j].costo
+                    var proba = tau[j] + alpha.toDouble() + eta[j] + beta.toDouble()
+                }
             }
         }
     }
 
-/**
-    fun asignaAleatorio(vehiculos: ArrayList<Vehiculo>):ArrayList<Vehiculo>{
-        val
-        while(){
-            val vehic =
-            val
-        }
 
+    fun asignaAleatorio(vehiculos: ArrayList<Vehiculo>):ArrayList<Vehiculo>{
+        val list =ArrayList<Int>()
+        for(i in 0 until dimension ){
+            list.add(i)
+        }
+        for(i in vehiculos){
+            i.agregaRuta(list[1])
+        }
+        return vehiculos
     }
-**/
+
+
+
 
 }

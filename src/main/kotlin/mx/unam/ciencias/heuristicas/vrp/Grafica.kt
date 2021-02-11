@@ -13,8 +13,7 @@ import kotlin.random.Random
  * Declaramos nuestra clase Grafica que representará los distintos métodos de nuestra grafica del problema
  * * @constructor Devuelve una gráfica
  */
-class Grafica(val url: String, val clientes:Int){
-
+class Grafica(url: String, val clientes:Int){
     val dao = DAO(url, clientes).getValores()
     val dimension = dao.first[0]
     val cords = dao.second
@@ -38,6 +37,7 @@ class Grafica(val url: String, val clientes:Int){
         return sqrt((distanciaX.toDouble().pow(2)) +(distanciaY.toDouble().pow(2)))
     }
 
+    /** Función que obtiene y actualiza la matriz de distancias **/
     fun obtieneDistancias(): Array<DoubleArray>{
         val matrizDistancia = Array(dimension) { DoubleArray(dimension) }
         //Llenamos la matriz de distancias obteniendo la distancia euclidena
@@ -58,10 +58,12 @@ class Grafica(val url: String, val clientes:Int){
         return matrizDistancia
     }
 
+    /** Función que obtiene el valor de la demanda dado un  int **/
     fun getDemanda(id: Int): Int{
         return demanda[id]
     }
 
+    /** Función que obtiene el costo de un vehículo **/
     fun getCostoVehiculo(vehiculo: Vehiculo): Double{
         val rutas = vehiculo.rutas
         var costo = 0.0
@@ -76,6 +78,7 @@ class Grafica(val url: String, val clientes:Int){
         return String.format("%.3f", costo).toDouble()
     }
 
+    /** Función que obtiene el costo total de la solucion de un problema **/
     fun getCosto(vehiculos: ArrayList<Vehiculo>):Double{
         var costo = 0.0
         for(vehiculo in vehiculos){
@@ -87,6 +90,7 @@ class Grafica(val url: String, val clientes:Int){
         return  String.format("%.3f", costo * 100).toDouble()
     }
 
+    /** Función que obtiene la capacidad usada por un vehiculo **/
     fun getCapacidadUsada(vehiculo: Vehiculo): Int{
         val rutas = vehiculo.rutas
         var capacidad = 0
@@ -96,6 +100,7 @@ class Grafica(val url: String, val clientes:Int){
         return capacidad
     }
 
+    /** Función que revisa si una asignación de vehiculos es factible o no **/
     fun esFactible(vehiculos: ArrayList<Vehiculo>): Boolean{
         for (vehiculo in vehiculos) {
             if  (vehiculo.capacidad < getCapacidadUsada(vehiculo)){
@@ -105,6 +110,7 @@ class Grafica(val url: String, val clientes:Int){
         return true
     }
 
+    /** Función que obtiene el angulo polar de un nodo, dado su id **/
     fun obtieneAnguloPolar(id: Int): Double {
         val x1 = cords[id][0]
         val y1 = cords[id][1]
@@ -115,6 +121,7 @@ class Grafica(val url: String, val clientes:Int){
         return (90 - angle) % 360
     }
 
+    /** Función que obtiene la solucion inicial con el sweep algorithm **/
     fun obtieneSolucionInicial():ArrayList<Vehiculo>{
         var contaId = 1
         var capacidadUsada = 0
@@ -151,6 +158,7 @@ class Grafica(val url: String, val clientes:Int){
         return vehiculos
     }
 
+    /** Función que convierte a string el valor de las asignaciones **/
     fun toString(vehiculos: ArrayList<Vehiculo>): String{
         var s = "\n"
         for (vehiculo in vehiculos) {
@@ -169,6 +177,7 @@ class Grafica(val url: String, val clientes:Int){
         return s
     }
 
+    /** Función que obtiene una solucion con vehiculos sin enrutar **/
     fun obtieneSolucionVacia(): ArrayList<Vehiculo>{
         val vehiculosVacios = ArrayList<Vehiculo>()
         val list =ArrayList<Int>()
@@ -178,4 +187,5 @@ class Grafica(val url: String, val clientes:Int){
         }
         return vehiculosVacios
     }
+
 }

@@ -18,7 +18,7 @@ class DAO(val url: String, val clientes:Int) {
     var capacidad = 0
     /** Óptimo de vehículos */
     var vehiculos = 0
-    /**Coordenadas de los clientes*/
+    /** Coordenadas de los clientes*/
     val cords = Array(clientes) { IntArray(2) }
     /** Demandas de los clientes*/
     val pedidos = IntArray(clientes)
@@ -72,6 +72,7 @@ class DAO(val url: String, val clientes:Int) {
         }
     }
 
+    /**Función usada para devolver los valores obtenidos del archivo**/
     fun getValores(): Triple<ArrayList<Int>, Array<IntArray>, IntArray>{
         obtieneValores()
         val valores = ArrayList<Int>()

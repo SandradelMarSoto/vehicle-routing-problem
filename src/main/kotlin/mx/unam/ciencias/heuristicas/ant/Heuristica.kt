@@ -19,7 +19,7 @@ class Heuristica(val g: Grafica, val solucionInicial: Solucion) {
     /** Variable que irá guardando la mejor solución del sistema */
     var mejorSolucionActual = Solucion(g,g.obtieneSolucionInicial(), Random(4))
     /** Máximo de iteraciones que realizará la búsqueda tabú*/
-    private val maximoIteraciones = 200000
+    private val maximoIteraciones = 200
     /** Tamaño máximo de la lista tabú*/
     private val maximoListaTabu = 100
     /** Cantidad máxima de vecinos a generarse por solución*/
@@ -51,11 +51,7 @@ class Heuristica(val g: Grafica, val solucionInicial: Solucion) {
         val vecindad =  ArrayList<Solucion>()
         for(i in 0 until maxVecinos) {
             val vecino1 = solucion.generaVecinoSwap()
-            //val vecino2 = solucion.generaVecinoShift()
-            //println(vecino1)
-            //println(vecino2)
             vecindad.add(vecino1)
-            //vecindad.add(vecino2)
         }
         return vecindad
     }
@@ -87,15 +83,21 @@ class Heuristica(val g: Grafica, val solucionInicial: Solucion) {
             while(listaTabu.size > maximoListaTabu){
                 listaTabu.removeAt(0)
             }
+            println("Mejor Costo Actual: " + g.getCosto(mejorSolucionActual.asignaciones))
             iteracion ++
         }
     }
+
+    /**
+     * Función que realiza la optimización colonia de hormigas y va actualizando la mejor solución del sistema
+     * Esta implementación no se usa en el proyecto, pero el código se deja de referencia
 
     fun ants(){
         val aco = AntColony(g.matrizDistancia, g)
         aco.aco()
         val mejorSolucionHormiga = aco.mejorHormigaCosto
     }
+    **/
 
 
     /**
