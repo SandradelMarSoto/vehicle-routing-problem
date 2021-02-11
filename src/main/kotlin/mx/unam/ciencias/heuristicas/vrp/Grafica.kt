@@ -67,11 +67,12 @@ class Grafica(val url: String, val clientes:Int){
         var costo = 0.0
         if(rutas.size > 0) {
             val primero = rutas[0]
-            var costo = matrizDistancia[0][primero]
+            costo += matrizDistancia[0][primero]
             for (i in 1 until rutas.size) {
                 costo += matrizDistancia[rutas[i-1]][rutas[i]]
             }
             costo += matrizDistancia[rutas[rutas.size-1]][0]
+
         }
         return costo
     }
@@ -84,7 +85,7 @@ class Grafica(val url: String, val clientes:Int){
         if(esFactible(vehiculos)){
             return costo
         }
-        return costo * 1000
+        return costo * 1000000
     }
 
     fun getCapacidadUsada(vehiculo: Vehiculo): Int{
