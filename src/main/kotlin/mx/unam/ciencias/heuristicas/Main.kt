@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
                 //println("Sol Inicial$solucionInicial")
                 val vrp = Heuristica(graf, solucionInicial)
                 //Heuristica
-                //vrp.hormigas
+                //vrp.ants
                 vrp.tabu()
                 if (vrp.evaluacion() <= mejorCosto){
                         mejorCosto = vrp.evaluacion()

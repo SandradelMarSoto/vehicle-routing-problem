@@ -10,7 +10,7 @@ import mx.unam.ciencias.heuristicas.vrp.Solucion
  * @property g La grafica en la que estaremos trabajando
  * @property solucionInicial La primera posible solucion
  */
-class Heuristica(g: Grafica, solucionInicial: Solucion) {
+class Heuristica(val g: Grafica, solucionInicial: Solucion) {
     /** La cantidad de clientes del problema*/
     private val clientes = g.clientes
     /** Variable que irá guardando la solución actual del sistema*/
@@ -91,6 +91,12 @@ class Heuristica(g: Grafica, solucionInicial: Solucion) {
             iteracion ++
             print(mejorSolucionActual)
         }
+    }
+
+    fun ants(){
+        val aco = AntColony(g.matrizDistancia, g)
+        aco.aco()
+        val mejorSolucionHormiga = aco.mejorHormigaCosto
     }
 
 

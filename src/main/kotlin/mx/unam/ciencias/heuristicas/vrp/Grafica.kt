@@ -169,4 +169,14 @@ class Grafica(val url: String, val clientes:Int){
         }
         return s
     }
+
+    fun obtieneSolucionVacia(): ArrayList<Vehiculo>{
+        val vehiculosVacios = ArrayList<Vehiculo>()
+        val list =ArrayList<Int>()
+        for(i in 0 until vehiculos){
+            var vehic = Vehiculo(i+1, capacidad, list)
+            vehiculosVacios.add(vehic)
+        }
+        return vehiculosVacios
+    }
 }
