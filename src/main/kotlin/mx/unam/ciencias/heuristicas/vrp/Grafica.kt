@@ -72,9 +72,8 @@ class Grafica(val url: String, val clientes:Int){
                 costo += matrizDistancia[rutas[i-1]][rutas[i]]
             }
             costo += matrizDistancia[rutas[rutas.size-1]][0]
-
         }
-        return costo
+        return String.format("%.3f", costo).toDouble()
     }
 
     fun getCosto(vehiculos: ArrayList<Vehiculo>):Double{
@@ -83,9 +82,9 @@ class Grafica(val url: String, val clientes:Int){
             costo += getCostoVehiculo(vehiculo)
         }
         if(esFactible(vehiculos)){
-            return costo
+            return String.format("%.3f", costo).toDouble()
         }
-        return costo * 1000000
+        return  String.format("%.3f", costo * 100).toDouble()
     }
 
     fun getCapacidadUsada(vehiculo: Vehiculo): Int{

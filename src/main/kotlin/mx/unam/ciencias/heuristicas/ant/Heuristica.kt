@@ -3,6 +3,7 @@ package mx.unam.ciencias.heuristicas.ant
 import mx.unam.ciencias.heuristicas.modelo.Vehiculo
 import mx.unam.ciencias.heuristicas.vrp.Grafica
 import mx.unam.ciencias.heuristicas.vrp.Solucion
+import kotlin.random.Random
 
 /**
  * Declaramos nuestra clase Heuristica que realizará la búsqueda tabú
@@ -10,15 +11,15 @@ import mx.unam.ciencias.heuristicas.vrp.Solucion
  * @property g La grafica en la que estaremos trabajando
  * @property solucionInicial La primera posible solucion
  */
-class Heuristica(val g: Grafica, solucionInicial: Solucion) {
+class Heuristica(val g: Grafica, val solucionInicial: Solucion) {
     /** La cantidad de clientes del problema*/
     private val clientes = g.clientes
     /** Variable que irá guardando la solución actual del sistema*/
     private var solucionActual = solucionInicial
     /** Variable que irá guardando la mejor solución del sistema */
-    var mejorSolucionActual = solucionInicial
+    var mejorSolucionActual = Solucion(g,g.obtieneSolucionInicial(), Random(4))
     /** Máximo de iteraciones que realizará la búsqueda tabú*/
-    private val maximoIteraciones = 20000
+    private val maximoIteraciones = 200000
     /** Tamaño máximo de la lista tabú*/
     private val maximoListaTabu = 100
     /** Cantidad máxima de vecinos a generarse por solución*/
@@ -36,7 +37,7 @@ class Heuristica(val g: Grafica, solucionInicial: Solucion) {
             it in solucionesTabu
         }
         //Ordenamos los vecinos de acuerdo a su costo
-        solucionesVecinas.sortedWith(compareBy({ it.costo }, { it.costo }))
+        solucionesVecinas.sortedWith(compareBy({ g.getCosto(it.asignaciones) }, {g.getCosto(it.asignaciones) }))
         //Devolvemos al vecino con el menor valor
         return solucionesVecinas[0]
     }
@@ -50,11 +51,11 @@ class Heuristica(val g: Grafica, solucionInicial: Solucion) {
         val vecindad =  ArrayList<Solucion>()
         for(i in 0 until maxVecinos) {
             val vecino1 = solucion.generaVecinoSwap()
-            val vecino2 = solucion.generaVecinoShift()
+            //val vecino2 = solucion.generaVecinoShift()
             //println(vecino1)
             //println(vecino2)
             vecindad.add(vecino1)
-            vecindad.add(vecino2)
+            //vecindad.add(vecino2)
         }
         return vecindad
     }
@@ -77,19 +78,16 @@ class Heuristica(val g: Grafica, solucionInicial: Solucion) {
             // Asignamos al mejorVecino como la nueva solucion actual y lo agregamos a la lista tabú
             listaTabu.add(mejorVecino)
             solucionActual = mejorVecino
-            println("Costo completo:" + solucionActual.costo)
+            //println("Costo completo:" + solucionActual.costo)
             //Si este vecino tiene mejor costo que la mejor solucion actual, lo actualizamos
-            if(mejorVecino.costo < mejorSolucionActual.costo){
-                println("Entro aquí")
+            if(g.getCosto(mejorVecino.asignaciones) < g.getCosto(mejorSolucionActual.asignaciones)){
                 mejorSolucionActual = mejorVecino
             }
             //Si sobrepasamos el máximo de la lista tabú, sacamos los primeros elementos hasta que sea de menor tamaño
             while(listaTabu.size > maximoListaTabu){
                 listaTabu.removeAt(0)
             }
-            //println("E = $mejorSolucionActual\n")
             iteracion ++
-            print(mejorSolucionActual)
         }
     }
 
@@ -110,12 +108,12 @@ class Heuristica(val g: Grafica, solucionInicial: Solucion) {
      * Función que regresa el costo de la mejor solución del sistema
      * @return El costo de la mejor solución del sistema
      */
-    fun evaluacion(): Double = mejorSolucionActual.costo
+    fun evaluacion(): Double = g.getCosto(mejorSolucionActual.asignaciones)
 
     /**
      * Función que regresa si la mejor solución del sistema es factible o no
      * @return Un booleano que nos dice si es factible o no la solución
      */
-    fun esFactible(): Boolean = mejorSolucionActual.factible
+    fun esFactible(): Boolean = g.esFactible(mejorSolucionActual.asignaciones)
 
 }

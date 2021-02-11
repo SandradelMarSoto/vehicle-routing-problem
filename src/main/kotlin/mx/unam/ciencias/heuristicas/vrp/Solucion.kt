@@ -13,8 +13,8 @@ import kotlin.random.Random
  */
 class Solucion(private val g: Grafica, var asignaciones: ArrayList<Vehiculo>, private val random: Random ) {
 
-    var costo = g.getCosto(asignaciones)
-    var factible = g.esFactible(asignaciones)
+    //val costo = g.getCosto(asignaciones)
+    //val factible = g.esFactible(asignaciones)
 
     /**
      * Función que obtiene el vecino de una solución, intercambiamos las tareas de dos trabajadores

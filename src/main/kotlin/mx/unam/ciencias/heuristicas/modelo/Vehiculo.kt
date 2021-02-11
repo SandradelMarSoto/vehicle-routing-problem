@@ -1,7 +1,5 @@
 package mx.unam.ciencias.heuristicas.modelo
 
-import com.sun.xml.internal.bind.v2.model.core.NonElement
-
 /**
  * Declaramos nuestra clase DAO que obtiene la información de la base de datos
  *

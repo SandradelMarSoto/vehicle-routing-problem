@@ -22,11 +22,10 @@ fun main(args: Array<String>) {
         var mejorCosto = Double.MAX_VALUE
         var mejorSemilla = 0
         var mejorAsignacion = ""
+        val asignacionActual = graf.obtieneSolucionInicial()
         for (i in seedS until seedF + 1)  {
                 println("Semilla: $i")
-                val asignacionActual = graf.obtieneSolucionInicial()
                 val solucionInicial = Solucion(graf, asignacionActual, Random(i))
-                //println("Sol Inicial$solucionInicial")
                 val vrp = Heuristica(graf, solucionInicial)
                 //Heuristica
                 //vrp.ants
