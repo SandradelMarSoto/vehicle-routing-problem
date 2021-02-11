@@ -11,10 +11,10 @@ import kotlin.random.Random
  * @property random La semilla para generar valores aleatorios
  * @constructor Crea una solución
  */
-class Solucion(val g: Grafica, var asignaciones: ArrayList<Vehiculo>, private val random: Random ) {
+class Solucion(private val g: Grafica, var asignaciones: ArrayList<Vehiculo>, private val random: Random ) {
 
-    val costo = g.getCosto(asignaciones)
-    val factible = g.esFactible(asignaciones)
+    var costo = g.getCosto(asignaciones)
+    var factible = g.esFactible(asignaciones)
 
     /**
      * Función que obtiene el vecino de una solución, intercambiamos las tareas de dos trabajadores

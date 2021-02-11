@@ -153,7 +153,7 @@ class Grafica(val url: String, val clientes:Int){
     }
 
     fun toString(vehiculos: ArrayList<Vehiculo>): String{
-        var s = "Resultado:\n"
+        var s = "\n"
         for (vehiculo in vehiculos) {
             s += "Vehiculo "+ vehiculo.id +"\n"
             s += "Ruta: ["
@@ -167,10 +167,6 @@ class Grafica(val url: String, val clientes:Int){
             s += "Costo "+ getCostoVehiculo(vehiculo).toString()
             s += "\n"
         }
-        s+= "Es Factible: "
-        s+= esFactible(vehiculos).toString()
-        s+= "\nCosto Total: "
-        s+= getCosto(vehiculos).toString()
         return s
     }
 }

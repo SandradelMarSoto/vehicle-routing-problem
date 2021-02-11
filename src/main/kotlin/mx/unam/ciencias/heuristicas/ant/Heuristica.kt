@@ -16,7 +16,7 @@ class Heuristica(g: Grafica, solucionInicial: Solucion) {
     /** Variable que irá guardando la solución actual del sistema*/
     private var solucionActual = solucionInicial
     /** Variable que irá guardando la mejor solución del sistema */
-    private var mejorSolucionActual = solucionInicial
+    var mejorSolucionActual = solucionInicial
     /** Máximo de iteraciones que realizará la búsqueda tabú*/
     private val maximoIteraciones = 20000
     /** Tamaño máximo de la lista tabú*/
@@ -51,8 +51,8 @@ class Heuristica(g: Grafica, solucionInicial: Solucion) {
         for(i in 0 until maxVecinos) {
             val vecino1 = solucion.generaVecinoSwap()
             val vecino2 = solucion.generaVecinoShift()
-            println(vecino1)
-            println(vecino2)
+            //println(vecino1)
+            //println(vecino2)
             vecindad.add(vecino1)
             vecindad.add(vecino2)
         }
@@ -70,7 +70,6 @@ class Heuristica(g: Grafica, solucionInicial: Solucion) {
         listaTabu.add(solucionActual)
         //Mientras no sobrepasemos el maximo de iteraciones, iteramos
         while(iteracion != maximoIteraciones){
-            println(iteracion)
             //Generamos la vecindad de la solución actual del sistema
             val vecindad = generaVecinos(solucionActual)
             // Obtenemos al mejor vecino no tabú de la vecindad
@@ -78,16 +77,19 @@ class Heuristica(g: Grafica, solucionInicial: Solucion) {
             // Asignamos al mejorVecino como la nueva solucion actual y lo agregamos a la lista tabú
             listaTabu.add(mejorVecino)
             solucionActual = mejorVecino
+            println("Costo completo:" + solucionActual.costo)
             //Si este vecino tiene mejor costo que la mejor solucion actual, lo actualizamos
             if(mejorVecino.costo < mejorSolucionActual.costo){
+                println("Entro aquí")
                 mejorSolucionActual = mejorVecino
             }
             //Si sobrepasamos el máximo de la lista tabú, sacamos los primeros elementos hasta que sea de menor tamaño
             while(listaTabu.size > maximoListaTabu){
                 listaTabu.removeAt(0)
             }
-            println("E = " + mejorSolucionActual.costo)
+            //println("E = $mejorSolucionActual\n")
             iteracion ++
+            print(mejorSolucionActual)
         }
     }
 

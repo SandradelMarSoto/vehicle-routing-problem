@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.3)  10 FEB 2021 19:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.3)  10 FEB 2021 21:29
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -746,8 +746,8 @@ Package babel Info: Making < an active character on input line 707.
 Package babel Info: Making > an active character on input line 707.
 ))
 (./reporte.aux
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
+LaTeX Info: Redefining \. on input line 26.
+LaTeX Info: Redefining \% on input line 26.
 )
 \openout1 = `reporte.aux'.
 
@@ -927,14 +927,14 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 27.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 34.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 35.
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--40
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
 
-LaTeX Warning: Citation `clever' on page 1 undefined on input line 51.
+LaTeX Warning: Citation `clever' on page 1 undefined on input line 52.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -946,29 +946,29 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 1694) has occurred while \output is active []
 
  [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 170.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 171.
 
 [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 170.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 171.
  (./reporte.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 170.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 170.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 171.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 171.
 Package rerunfilecheck Info: File `reporte.out' has not changed.
 (rerunfilecheck)             Checksum: 769D6249D2B599EA3EB915ACF244C981;307.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 170.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 171.
  ) 
 Here is how much of TeX's memory you used:
- 10881 strings out of 492982
- 155154 string characters out of 6134897
+ 10886 strings out of 492982
+ 155220 string characters out of 6134897
  272501 words of memory out of 5000000
- 14267 multiletter control sequences out of 15000+600000
+ 14272 multiletter control sequences out of 15000+600000
  30123 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,17n,45p,1308b,467s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -980,7 +980,7 @@ ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8
 a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on reporte.pdf (4 pages, 96671 bytes).
+Output written on reporte.pdf (4 pages, 100694 bytes).
 PDF statistics:
  89 PDF objects out of 1000 (max. 8388607)
  74 compressed objects within 1 object stream

@@ -26,6 +26,7 @@ fun main(args: Array<String>) {
                 println("Semilla: $i")
                 val asignacionActual = graf.obtieneSolucionInicial()
                 val solucionInicial = Solucion(graf, asignacionActual, Random(i))
+                //println("Sol Inicial$solucionInicial")
                 val vrp = Heuristica(graf, solucionInicial)
                 //Heuristica
                 //vrp.hormigas
@@ -35,7 +36,11 @@ fun main(args: Array<String>) {
                         mejorSemilla = i
                         mejorAsignacion = vrp.asignacionString()
                 }
-                println(mejorAsignacion)
+                println("Asignacion:\n" + vrp.asignacionString())
+                println("Costo Total: ${vrp.evaluacion()}")
+                println("¿Es Factible?: ${vrp.esFactible()}")
+                println("---------------------------------------------\n")
+                string += "Semilla: $i, Costo: ${vrp.evaluacion()}\n"
         }
         string += "Mejor Semilla: $mejorSemilla, Mejor Costo: $mejorCosto , Mejor Asignación: $mejorAsignacion"
         if(seedS != seedF) {
